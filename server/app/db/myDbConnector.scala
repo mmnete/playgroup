@@ -14,7 +14,7 @@ import java.text._
 class myDbConnector {
 
   // Name of the database (password, port, etc. is not required)
-  val dbName: String = "jdbc:sqlite:db/playgroup.db";
+  val dbName: String = "jdbc:postgresql://localhost:5432/mmnete?user=mmnete&password=0811494";
   var dbConnection: Connection = null;
 
   def connectToDatabase(): Boolean = {
@@ -115,7 +115,12 @@ class myDbConnector {
   }
 
   def fetchUser (email: String): user = {
-      // using prepared statement for security of our queries
+       if(connectToDatabase()){
+         println("Connected")
+       } else {
+         println("Not connected")
+       }
+   // using prepared statement for security of our queries
       var selectQuery = "SELECT * FROM users WHERE email = ?";
       var pstmt: PreparedStatement = this.dbConnection.prepareStatement(selectQuery)
       pstmt.setString(1, email);
@@ -196,8 +201,8 @@ class myDbConnector {
       var found = false
       var selectQuery = "SELECT * FROM userrelations WHERE followerid = ? AND followedid = ?";
       var pstmt: PreparedStatement = this.dbConnection.prepareStatement(selectQuery)
-      pstmt.setString(1, otherUser.id);
-      pstmt.setString(2, me.id);
+      pstmt.setInt(1, otherUser.id.toInt);
+      pstmt.setInt(2, me.id.toInt);
       val res: ResultSet = pstmt.executeQuery();
       while (res.next()) {
             found = true
@@ -213,8 +218,8 @@ class myDbConnector {
       var found = false
       var selectQuery = "SELECT * FROM userrelations WHERE followerid = ? AND followedid = ?";
       var pstmt: PreparedStatement = this.dbConnection.prepareStatement(selectQuery)
-      pstmt.setString(1, me.id);
-      pstmt.setString(2, otherUser.id);
+      pstmt.setInt(1, me.id.toInt);
+      pstmt.setInt(2, otherUser.id.toInt);
       val res: ResultSet = pstmt.executeQuery();
       while (res.next()) {
             found = true
@@ -229,8 +234,8 @@ class myDbConnector {
       // using prepared statement for security of our queries
       var insertQuery = "INSERT INTO userrelations (followerid, followedid) VALUES (?, ?)";
       var pstmt: PreparedStatement = this.dbConnection.prepareStatement(insertQuery)
-      pstmt.setString(1, me.id);
-      pstmt.setString(2, otherUser.id);
+      pstmt.setInt(1, me.id.toInt);
+      pstmt.setInt(2, otherUser.id.toInt);
       pstmt.executeUpdate();
       pstmt.close();
   }
@@ -239,8 +244,8 @@ class myDbConnector {
       // using prepared statement for security of our queries
       var insertQuery = "DELETE FROM userrelations WHERE  followerid = ? AND followedid = ?";
       var pstmt: PreparedStatement = this.dbConnection.prepareStatement(insertQuery)
-      pstmt.setString(1, otherUser.id);
-      pstmt.setString(2, me.id);
+      pstmt.setInt(1, otherUser.id.toInt);
+      pstmt.setInt(2, me.id.toInt);
       pstmt.executeUpdate();
       pstmt.close();
   }
@@ -249,8 +254,8 @@ class myDbConnector {
       // using prepared statement for security of our queries
       var insertQuery = "DELETE FROM userrelations WHERE  followerid = ? AND followedid = ?";
       var pstmt: PreparedStatement = this.dbConnection.prepareStatement(insertQuery)
-      pstmt.setString(1, me.id);
-      pstmt.setString(2, otherUser.id);
+      pstmt.setInt(1, me.id.toInt);
+      pstmt.setInt(2, otherUser.id.toInt);
       pstmt.executeUpdate();
       pstmt.close();
   }
@@ -260,7 +265,7 @@ class myDbConnector {
       // search query
       var selectQuery = "SELECT * FROM users WHERE id IN (SELECT followedid FROM userrelations WHERE followerid = ?)";
       var pstmt: PreparedStatement = this.dbConnection.prepareStatement(selectQuery)
-      pstmt.setString(1, me.id);
+      pstmt.setInt(1, me.id.toInt);
       val res: ResultSet = pstmt.executeQuery();
       var userList = new ListBuffer[user]()
       while (res.next()) {
@@ -281,7 +286,7 @@ class myDbConnector {
       // search query
       var selectQuery = "SELECT * FROM users WHERE id IN (SELECT followerid FROM userrelations WHERE followedid = ?)";
       var pstmt: PreparedStatement = this.dbConnection.prepareStatement(selectQuery)
-      pstmt.setString(1, me.id);
+      pstmt.setInt(1, me.id.toInt);
       val res: ResultSet = pstmt.executeQuery();
       var userList = new ListBuffer[user]()
       while (res.next()) {
@@ -302,7 +307,7 @@ class myDbConnector {
       // using prepared statement for security of our queries
       var insertQuery = "DELETE FROM posts WHERE userid = ?";
       var pstmt: PreparedStatement = this.dbConnection.prepareStatement(insertQuery)
-      pstmt.setString(1, me.id);
+      pstmt.setInt(1, me.id.toInt);
       pstmt.executeUpdate();
       pstmt.close();
   }
@@ -315,7 +320,7 @@ class myDbConnector {
       var pstmt: PreparedStatement = this.dbConnection.prepareStatement(insertQuery)
       pstmt.setString(1, caption);
       pstmt.setString(2, url);
-      pstmt.setString(3, me.id);
+      pstmt.setInt(3, me.id.toInt);
       pstmt.setString(4, filetype);
       pstmt.setString(5, Calendar.getInstance().getTime().toString());
       pstmt.executeUpdate();
@@ -336,7 +341,7 @@ class myDbConnector {
               var id = res.getInt("id");
               var caption = res.getString("caption");
               var url = res.getString("url");
-              var userid = res.getString("userid");
+              var userid = res.getInt("userid").toString;
               var filetype = res.getString("filetype");
               postsList += post(id.toString, caption, url, userid, filetype)
               searchLimit = searchLimit - 1
@@ -351,7 +356,7 @@ class myDbConnector {
       // using prepared statement for security of our queries
       var selectQuery = "SELECT * FROM posts WHERE userid = ?";
       var pstmt: PreparedStatement = this.dbConnection.prepareStatement(selectQuery)
-      pstmt.setString(1, me.id);
+      pstmt.setInt(1, me.id.toInt);
       val res: ResultSet = pstmt.executeQuery();
       var postList = new ListBuffer[post]()
       while (res.next()) {
@@ -412,22 +417,35 @@ class myDbConnector {
   }
 
   def getPosts(me: user): Seq[post] = {
-     // using prepared statement for security of our queries
+  /*   
+      var peopleIFollow = getFollowList(me)
+      var postList = new ListBuffer[post]()
+
+      for(currUser <- peopleIFollow)
+      {
+         postList += getPost(currUser)
+
+      }
+
+      return postList;
+*/
+
+   // using prepared statement for security of our queries
      var selectQuery = """
-     SELECT posts.id, posts.caption, posts.url, posts.filetype, posts.posttime, users.fullname
+     SELECT posts.id AS postid, caption, url, filetype, posttime, fullname
      FROM (SELECT * FROM posts WHERE userid IN ( SELECT followedid from userrelations WHERE followerid = ?)) AS posts
      INNER JOIN users
      ON users.id = posts.userid;
      """;
      var pstmt: PreparedStatement = this.dbConnection.prepareStatement(selectQuery)
-     pstmt.setString(1, me.id);
+     pstmt.setInt(1, me.id.toInt);
      val res: ResultSet = pstmt.executeQuery();
      var postList = new ListBuffer[post]()
      while (res.next()) {
 
            var sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
            var currTime =  sdf.parse(Calendar.getInstance().getTime().toString()) //Calendar.getInstance().getTime();
-           var postTime = sdf.parse(res.getString("posts.posttime"));
+           var postTime = sdf.parse(res.getString("posttime"));
 
            var diffInSecs = Math.abs(currTime.getTime() - postTime.getTime())/1000.0;
 
@@ -435,11 +453,11 @@ class myDbConnector {
 
            if(diffInSecs <= 86400)
            {
-             var id = res.getInt("posts.id");
-             var caption = res.getString("posts.caption");
-             var url = res.getString("posts.url");
-             var userid = res.getString("users.fullname");
-             var filetype = res.getString("posts.filetype");
+             var id = res.getInt("postid");
+             var caption = res.getString("caption");
+             var url = res.getString("url");
+             var userid = res.getString("fullname");
+             var filetype = res.getString("filetype");
              postList += post(id.toString, caption, url, userid.toString, filetype)
            }
        }
@@ -447,13 +465,14 @@ class myDbConnector {
       pstmt.close()
       println(postList)
       return postList;
+     
   }
 
   def unlikePost(postId: String, me: user): Unit = {
     var insertQuery = "DELETE FROM likes WHERE postid = ? AND userid = ?";
     var pstmt: PreparedStatement = this.dbConnection.prepareStatement(insertQuery)
-    pstmt.setString(1, postId);
-    pstmt.setString(2, me.id);
+    pstmt.setInt(1, postId.toInt);
+    pstmt.setInt(2, me.id.toInt);
     pstmt.executeUpdate();
     pstmt.close();
   }
@@ -461,8 +480,8 @@ class myDbConnector {
   def unlikePost(currPost: post, me: user): Unit = {
     var insertQuery = "DELETE FROM likes WHERE postid = ? AND userid = ?";
     var pstmt: PreparedStatement = this.dbConnection.prepareStatement(insertQuery)
-    pstmt.setString(1, currPost.id);
-    pstmt.setString(2, me.id);
+    pstmt.setInt(1, currPost.id.toInt);
+    pstmt.setInt(2, me.id.toInt);
     pstmt.executeUpdate();
     pstmt.close();
   }
@@ -470,8 +489,8 @@ class myDbConnector {
   def likePost (postId: String, me: user): Unit = {
     var insertQuery = "INSERT INTO likes (postid, userid) VALUES (?, ?)";
     var pstmt: PreparedStatement = this.dbConnection.prepareStatement(insertQuery)
-    pstmt.setString(1, postId);
-    pstmt.setString(2, me.id);
+    pstmt.setInt(1, postId.toInt);
+    pstmt.setInt(2, me.id.toInt);
     pstmt.executeUpdate();
     pstmt.close();
   }
@@ -479,8 +498,8 @@ class myDbConnector {
   def likePost (currPost: post, me: user): Unit = {
     var insertQuery = "INSERT INTO likes (postid, userid) VALUES (?, ?)";
     var pstmt: PreparedStatement = this.dbConnection.prepareStatement(insertQuery)
-    pstmt.setString(1, currPost.id);
-    pstmt.setString(2, me.id);
+    pstmt.setInt(1, currPost.id.toInt);
+    pstmt.setInt(2, me.id.toInt);
     pstmt.executeUpdate();
     pstmt.close();
   }
@@ -489,8 +508,8 @@ class myDbConnector {
     var isLiked = false;
     var insertQuery = "SELECT * FROM likes WHERE postid = ? AND userid = ?";
     var pstmt: PreparedStatement = this.dbConnection.prepareStatement(insertQuery)
-    pstmt.setString(1, postId);
-    pstmt.setString(2, me.id);
+    pstmt.setInt(1, postId.toInt);
+    pstmt.setInt(2, me.id.toInt);
     val res: ResultSet = pstmt.executeQuery();
     var postList = new ListBuffer[post]()
     while (res.next()) {
@@ -508,7 +527,7 @@ class myDbConnector {
       // search query
       var selectQuery = "SELECT * FROM users WHERE id IN (SELECT userid FROM likes WHERE postid = ?)";
       var pstmt: PreparedStatement = this.dbConnection.prepareStatement(selectQuery)
-      pstmt.setString(1, currPost.id);
+      pstmt.setInt(1, currPost.id.toInt);
       val res: ResultSet = pstmt.executeQuery();
       var userList = new ListBuffer[user]()
       while (res.next()) {
@@ -530,7 +549,7 @@ class myDbConnector {
       // search query
       var selectQuery = "SELECT * FROM users WHERE id IN (SELECT userid FROM likes WHERE postid = ?)";
       var pstmt: PreparedStatement = this.dbConnection.prepareStatement(selectQuery)
-      pstmt.setString(1, postId);
+      pstmt.setInt(1, postId.toInt);
       val res: ResultSet = pstmt.executeQuery();
       var userList = new ListBuffer[user]()
       while (res.next()) {
@@ -551,7 +570,7 @@ class myDbConnector {
       var selectQuery = "UPDATE users SET pictureurl = ? WHERE id = ?";
       var pstmt: PreparedStatement = this.dbConnection.prepareStatement(selectQuery)
       pstmt.setString(1, url);
-      pstmt.setString(2, me.id);
+      pstmt.setInt(2, me.id.toInt);
       pstmt.executeUpdate();
       pstmt.close();
   }
@@ -560,7 +579,7 @@ class myDbConnector {
       var selectQuery = "UPDATE users SET fullname = ? WHERE id = ?";
       var pstmt: PreparedStatement = this.dbConnection.prepareStatement(selectQuery)
       pstmt.setString(1, newName);
-      pstmt.setString(2, me.id);
+      pstmt.setInt(2, me.id.toInt);
       pstmt.executeUpdate();
       pstmt.close();
   }
@@ -569,7 +588,7 @@ class myDbConnector {
     var selectQuery = "UPDATE users SET password = ? WHERE id = ?";
     var pstmt: PreparedStatement = this.dbConnection.prepareStatement(selectQuery)
     pstmt.setString(1, newPassword);
-    pstmt.setString(2, me.id);
+    pstmt.setInt(2, me.id.toInt);
     pstmt.executeUpdate();
     pstmt.close();
   }
@@ -577,7 +596,7 @@ class myDbConnector {
   def deleteAccount(me: user): Unit = {
     var insertQuery = "DELETE FROM users WHERE id = ?";
     var pstmt: PreparedStatement = this.dbConnection.prepareStatement(insertQuery)
-    pstmt.setString(1, me.id);
+    pstmt.setInt(1, me.id.toInt);
     pstmt.executeUpdate();
     pstmt.close();
   }

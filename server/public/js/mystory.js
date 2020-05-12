@@ -18,10 +18,10 @@ function generateMyCurrentPost(){
         } else if(postJson.filetype == "image")
         {
           // chose image
-          postHtml += "<img id='myImagePost' class='postMediaContent' src='"+postJson.url+"' />";
+          postHtml += "<img id='myImagePost' style='width:350px; height:350px;' class='postMediaContent' src='"+postJson.url+"' />";
         } else if(postJson.filetype == "video")
         {
-          postHtml += "<video id='myVideoPost' class='postMediaContent' controls><source src='"+postJson.url+"' type='video/mp4'></video>";
+          postHtml += "<video id='myVideoPost' style='width:350px; height:350px;' class='postMediaContent' controls><source src='"+postJson.url+"' type='video/mp4'></video>";
         }
         postHtml += "<center><br><span id='myPostLikeNumber'>2.1k</span> Likes<br></center>";
         postHtml += "<span id='postCaption' class='postCaption'>"+postJson.caption+"</span>";
