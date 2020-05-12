@@ -1,0 +1,27 @@
+@import model._
+
+@(currUser: user)
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>@currUser.fullname</title>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Kurale'>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/loggedInMain.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.ico")">
+    <script src="@routes.Assets.versioned("js/mystory.js")" crossorigin></script>
+  </head>
+  <body>
+    <div id="currentPostContainer" class="currentPostContainer">
+      <div id="myPostContainer" class="postContainer">
+      </div>
+    </div>
+    <br>
+    <br>
+    <center>
+       <button id="storyPageBackBtn">Back</button>
+      </center>
+  </body>
+</html>

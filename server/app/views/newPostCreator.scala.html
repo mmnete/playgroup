@@ -1,0 +1,28 @@
+<div id="newPostDivBlur" class="newPostDivBlur">
+
+
+      <!--allows for the blur-->
+
+</div>
+
+<div id="newPostDiv" class="newPostDiv">
+  <center>
+  <h3><span class="onlineNewPostQuestion">What is on your mind?</span></h3>
+  <span>A new post will cancel the current post.</span>
+  </center>
+  <textarea title="Caption" id="newPostTextArea" class="newPostTextArea"
+  placeholder="Something to say ..."></textarea>
+  <center>click below to add image, video or audio:
+  <br>
+  <br>
+  <input type="file" id="fileUpload" accept="image/*|video/*|audio/*">
+  <br>
+  <br>
+  <span id="postProgressSpan"></span>
+  <br>
+  <button title="Upload Post" id="newPostDivPostBtn" class="newPostDivPostBtn">Upload Story</button><br><br>
+  <button title="Close" id="newPostDivCloseBtn" class="cancelNewPostDivPostBtn">Close</button><br><br>
+</center>
+
+</div>
+<script src="@routes.Assets.versioned("js/newPost.js")" crossorigin></script>

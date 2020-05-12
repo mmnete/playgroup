@@ -1,0 +1,51 @@
+.postContainer {
+  width: 40%;
+  height: 50%;
+  margin-top: 1%;
+  padding-bottom: 5%;
+  background-color: white;
+  border-radius: 2%;
+}
+
+.postFooterControls {
+  list-style-type: none;
+  margin: 4%;
+  padding: 0;
+  overflow: hidden;
+  color: black;
+}
+
+.postControl {
+  float: left;
+  margin-left: 5%;
+}
+
+.postInfo {
+  float: right;
+  margin-right: 1%;
+}
+
+.postMediaContent {
+  width: 90%;
+  height: 60%;
+  margin-left: 5%;
+}
+
+.postCaption {
+  width: 90%;
+  height: 200px;
+  margin-left: 5%;
+  overflow: auto;
+  display: inline-block;
+}
+
+#imagePost {
+  display: none;
+}
+
+#videoPost {
+}
+
+#audioPost {
+  display: none;
+}

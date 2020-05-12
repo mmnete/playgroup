@@ -1,0 +1,68 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET        /                             controllers.Application.index
+GET        /mystory                      controllers.Application.mystory
+GET        /login                        controllers.loginController.index
+GET        /register                     controllers.loginController.register
+GET        /forgotPassword               controllers.loginController.forgotPassword
++ nocsrf
+POST       /validateLogIn                controllers.loginController.validateLogIn
++ nocsrf
+POST       /registerUser                controllers.loginController.registerUser
++ nocsrf
+POST       /sendForgottenPassword        controllers.loginController.sendForgottenPassword
+GET        /logout                       controllers.Application.logout
++ nocsrf
+POST       /searchUsers                  controllers.Application.searchUsers
++ nocsrf
+POST       /followUser                  controllers.Application.followUser
++ nocsrf
+POST       /unfollowUser                  controllers.Application.unfollowUser
++ nocsrf
+POST       /removeFollower              controllers.Application.removeFollower
++ nocsrf
+POST       /getFollowList                  controllers.Application.getFollowList
++ nocsrf
+POST       /getFollowMeList                  controllers.Application.getFollowMeList
++ nocsrf
+POST       /newPostFileUpload                  controllers.Application.newPostFileUpload
++ nocsrf
+POST       /uploadCaption                  controllers.Application.uploadCaption
++ nocsrf
+POST	   /searchPosts				   controllers.Application.searchPosts
++ nocsrf
+POST       /getMyPost                  controllers.Application.getMyPost
++ nocsrf
+POST       /deleteMyPost                  controllers.Application.deleteMyPost
++ nocsrf
+POST       /changeProfilePhoto                  controllers.Application.changeProfilePhoto
++ nocsrf
+POST       /deleteProfilePhoto                  controllers.Application.deleteProfilePhoto
++ nocsrf
+POST       /newFullName                  controllers.Application.newFullName
++ nocsrf
+POST       /getListOfUserLikes                  controllers.Application.getListOfUserLikes
++ nocsrf
+POST       /updatePassword                  controllers.Application.updatePassword
++ nocsrf
+POST       /deleteAccount                  controllers.Application.deleteAccount
+
+GET       /viewUser/:email              controllers.Application.viewUser(email: String)
+
+GET       /viewUser/                    controllers.Application.viewUserError
+
+GET       /getPosts                     controllers.Application.getPosts
+
+GET       /getPostLikesUserList/:postid              controllers.Application.getPostLikesUserList(postid: String)
+
+GET       /likePost/:postid              controllers.Application.likePost(postid: String)
+
+GET       /unlikePost/:postid              controllers.Application.unlikePost(postid: String)
+
+GET       /isPostLiked/:postid              controllers.Application.isPostLiked(postid: String)
+# Prefix must match `play.assets.urlPrefix`
+GET        /assets/*file                 controllers.Assets.at(file)
+GET        /versionedAssets/*file        controllers.Assets.versioned(path="/public", file: Asset)

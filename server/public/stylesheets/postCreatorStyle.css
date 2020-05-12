@@ -1,0 +1,57 @@
+.newPostDivBlur {
+  position: fixed;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0.2;
+  display: none;
+}
+
+.newPostDiv {
+  position: fixed;
+  top: 5%;
+  right: 30%;
+  width: 40%;
+  opacity: 1.0;
+  background: white;
+  border-radius: 30px 30px 30px 30px;
+  display: none;
+}
+
+.newPostTextArea {
+  width: 95%;
+  margin-top: 2%;
+  margin-left: 2.5%;
+  height: 40%;
+  font-family: 'Kurale';
+}
+
+.newPostDivPostBtn {
+  width: 90%;
+  height: 3%;
+  margin-top: 1%;
+  color: white;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  background-color: #209CEE;
+}
+
+.cancelNewPostDivPostBtn {
+  width: 90%;
+  height: 3%;
+  margin-top: 1%;
+  color: white;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  background-color: red;
+}
+
+.newPostDivCloseBtn {
+  width: 3%;
+  height: 3%;
+  margin-top: 1%;
+  margin-left: 47.5%;
+}

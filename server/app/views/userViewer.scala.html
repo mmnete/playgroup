@@ -1,0 +1,48 @@
+@import model._
+
+@(currUser: user, follower: Boolean, iFollow: Boolean, me: Boolean)
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>@currUser.fullname</title>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Kurale'>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.ico")">
+
+    <!-- Libraries for React -->
+    <!-- <script src="https://unpkg.com/react@@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@@16/umd/react-dom.development.js" crossorigin></script>    ---->
+
+  </head>
+  <body>
+    <!--- @scalajs.html.scripts("client", routes.Assets.versioned(_).toString, name => getClass.getResource(s"/public/$name") != null) --->
+   <center>
+     <br>
+     <h2>@currUser.fullname</h2>
+     <span style="display: none;" id="userEmail">@currUser.email</span>
+     <br>
+     @if(currUser.pictureurl == "default"){
+        <img src="@routes.Assets.versioned("images/test-profile.png")" id="hugeProfileDivImage" class="hugeProfileDivImage"/>
+     } else {
+       <img src="@currUser.pictureurl" id="hugeProfileDivImage" class="hugeProfileDivImage"/>
+     }
+
+     <br>
+
+        @if(follower && !me) {
+          <button id="removeFollowerBtn" class="profileViewerBackBtn">REMOVE FOLLOWER</button><br><br>
+        }
+        @if(iFollow && !me) {
+          <button id="unfollowBtn" class="profileViewerBackBtn">UNFOLLOW</button>
+        } else if(!me) {
+          <button id="followBtn" class="profileViewerBackBtn">FOLLOW</button>
+        }
+
+     <br>
+     <br>
+     <button id="profileViewerBackBtn" class="profileViewerBackBtn">BACK</button>
+   </center>
+   <script src="@routes.Assets.versioned("js/userViewer.js")" crossorigin></script>
+  </body>
+</html>

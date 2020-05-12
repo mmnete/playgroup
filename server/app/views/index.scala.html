@@ -1,0 +1,23 @@
+@(username: String, messageTable: String, messageCount: Int)
+
+@main(username + " Welcome!") {
+
+  <h2>Welcome <em>@username</em></h2>
+  <form id="logoutButtonForm" method="post" action="logout">
+    <input value="Log Out" type="submit" name="logoutBtn">
+  </form>
+  <br>
+  <form id="sendMessageForm" method="get" action="sendMessage" style="border: strong;">
+    <h3>New Message</h3>
+    <input type="text" placeholder="ALL or [username]" name="to" style="width: 30%;" required>
+    <br>
+    <br>
+    <textarea placeholder="Message" name="message" style="width: 30%; height: 200px;" required></textarea>
+    <br>
+    <br>
+    <input type="submit" name="sendMessageBtn" value="Send Message" style="width: 30%;">
+  </form>
+   <br>
+     <h3>Inbox (@messageCount)</h3>
+     @Html(messageTable)
+}

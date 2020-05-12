@@ -1,0 +1,34 @@
+@import model._
+
+@(currUser: user)
+
+<div id="profileDiv" class="profileDiv">
+  <br>
+  <br>
+  <center>
+     <h3>Profile</h3>
+     @if(currUser.pictureurl == "default"){
+        <img src="@routes.Assets.versioned("images/test-profile.png")" id="profileDivImage" class="profileDivImage"/>
+     } else {
+       <img src="@currUser.pictureurl" id="profileDivImage" class="profileDivImage"/>
+     }
+     <br>
+      <span id="profilePhotoError"></span>
+   </center>
+   <br>
+   <button class="changeProfileBtn" id="removeProfilePhotoBtn">Remove Profile Photo</button>
+   <br>
+   <input type="file" class="changeProfileBtn" id="newProfilePhotoFileChooser" accept="image/*">
+   <br>
+   <button class="changeProfileBtn" id="changeProfilePhotoBtn">Update Profile Picture</button>
+   <br>
+   <input type="text" class="changeProfileInput" id="changeFullNameInput" placeholder="Enter new full name" value="@currUser.fullname" />
+   <button class="changeProfileBtn" id="changeFullNameBtn" >Update Full Name</button>
+   <br>
+   <input type="text" class="changeProfileInput" id="changeEmailInput" placeholder="Enter new email" value="@currUser.email" />
+   <br>
+   <button class="changeProfileBtn" id="viewMyStoryBtn" >View My Story</button>
+
+</div>
+
+<script src="@routes.Assets.versioned("js/profileSettings.js")" crossorigin></script>

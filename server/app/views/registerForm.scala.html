@@ -1,0 +1,16 @@
+@(error: String)
+
+@loginPage {
+<form id="registerForm" method="post" action="registerUser">
+  <h3>Register</h3>
+  <div class="errorTextDiv">@error</div>
+   <input class="loginRegisterInputGlobal" placeholder="Full Name" name="fullname" type="text" required/><br>
+   <input class="loginRegisterInputGlobal" placeholder="Email" name="email" type="text" required/><br>
+  <input class="loginRegisterInputGlobal" placeholder="Password" name="password" type="password"  required/><br>
+  <input class="loginRegisterInputGlobal" placeholder="Confirm Password" name="confpassword" type="password"  required/><br>
+  <input class="loginRegisterInputGlobal" value="Register" name="registerBtn" type="submit" />
+  <br>
+  <a href="/login" class="loginFormLinks">Log In</a><br>
+  <a href="/forgotPassword" class="loginFormLinks">Forgot Password</a>
+</form>
+}

@@ -1,0 +1,129 @@
+body, html {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+.errorTextDiv {
+  color: red;
+}
+
+.offlineTitle {
+  color: #209CEE;
+  font-weight: 20px;
+  font-family: 'Kurale';
+}
+
+.loginRegisterFormOuterDiv {
+    position: relative;
+    width: 40%;
+    padding: 5px 20px;
+    background: #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+    margin-left: 30%;
+    top: 15%;
+}
+
+.loginRegisterPageMainImage {
+    width: 20%;
+    height: 20%;
+    margin-top: 0.5%;
+}
+
+.loginRegisterInputGlobal {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+.loginFormLinks {
+  background-color: #209CEE;
+  color: white;
+  margin: 10px 20px;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.rightsReservedBottomDiv{
+  position: relative;
+  width: 100%;
+  text-align: center;
+  top: 15%;
+}
+
+
+.hugeProfileDivImage {
+  width: 30%;
+  height: 30%;
+
+}
+
+.profileViewerBackBtn {
+  display: block;
+  border: 1px solid powderblue;
+  padding: 10px;
+  color: white;
+  width: 25%;
+  background-color: #209CEE;
+  margin-top: 2%;
+}
+
+.deletePostBtn {
+  background-color: red;
+  color: white;
+}
+
+video::-webkit-media-controls-fullscreen-button {
+  display: none;
+}
+
+.postContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0 !important;
+}
+
+.postContainer .postCaption {
+  height: auto;
+  padding: 20px 20px;
+}
+
+.postContainer .postFooterControls {
+  width: 100%;
+  display: flex;
+  margin-top: 10px;
+  justify-content: center;
+  margin: 10px 0 5px 0;
+}
+
+.postContainer .mediaContainer {
+}
+
+.postContainer .mediaContainer .media {
+  margin-left: 2%;
+  height: 250px;
+}
+.postContainer .mediaContainer img.media {
+  width: auto;
+}
+
+.postContainer .mediaContainer .media_audio {
+  height: 50px;
+}
+
+center #deletePostBtn {
+  margin-bottom: 100px;
+}

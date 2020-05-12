@@ -1,0 +1,57 @@
+@import model._
+
+@(title: String, currUser: user)(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>@title</title>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Kurale'>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/loggedInMain.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/postCreatorStyle.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/postFooterStyle.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.ico")">
+    <script src="@routes.Assets.versioned("js/userFeedPageControls.js")" crossorigin></script>
+	<script src="@routes.Assets.versioned("js/discoverySearch.js")" crossorigin></script>
+    <script src="@routes.Assets.versioned("js/loadData.js")" crossorigin></script>
+
+    <!-- Libraries for React -->
+    <script src="https://unpkg.com/htm@@2.2.1" crossorigin></script>
+    <script src="https://unpkg.com/react@@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/prop-types@@15.6/prop-types.js"></script>
+
+  </head>
+  <body>
+    <input type="hidden" value="@routes.Assets.versioned("images/example-image-post.jpg")" id="testImageUrl">
+    <input type="hidden" value="@routes.Assets.versioned("images/spinner.gif")" id="spinner">
+    <!---navbar-->
+    <center>
+    <a href="/"><img id="mainPageHomeImage" class="mainPageHomeImage" src="@routes.Assets.versioned("images/android-chrome-512x512.png")" /></a>
+    @searchForStory()
+    </center>
+    @content
+    @settings()
+    @profile(currUser)
+    @followersList()
+    @newPostCreator()
+    <ul id="bottomNav" class="bottomNav">
+      <li title="New Post" class="bottomNavNewPostBtn" id="bottomNavNewPostBtn">
+          <span class="onlineNewPostQuestion" style="cursor: pointer;">What is on your mind?</span>
+      </li>
+      <li title="Settings" class="bottomNavSettingsBtn" id="bottomNavSettingsBtn"><img src="@routes.Assets.versioned("images/settings.png")" id="settingsBtn" class="settingsBtn"/></li>
+      <li title="Profile" class="bottomNavProfileBtn" id="bottomNavProfileBtn">
+        @if(currUser.pictureurl == "default"){
+           <img src="@routes.Assets.versioned("images/test-profile.png")" id="profileImage" class="profileImage"/>
+        } else {
+          <img src="@currUser.pictureurl" id="profileImage" class="profileImage"/>
+        }
+      </li>
+      <li title="Connections" class="bottomNavConnectionsBtn" id="bottomNavConnectionsBtn"><img src="@routes.Assets.versioned("images/connect-icon.webp")" id="connectionsImage" class="connectionsImage"/></li>
+      <li title="Home" class="bottomNavHomeBtn" id="bottomNavHomeBtn"><img src="@routes.Assets.versioned("images/globe-512.png")" id="homeImage" class="homeImage"/></li>
+    </ul>
+  <!--- @scalajs.html.scripts("client", routes.Assets.versioned(_).toString, name => getClass.getResource(s"/public/$name") != null) --->
+  </body>
+</html>
